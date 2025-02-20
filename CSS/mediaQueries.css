@@ -1,4 +1,3 @@
-
 /* Small devices (phones, 768px and down) */
 @media screen and (max-width: 768px) {
     .container {
@@ -56,7 +55,7 @@
         gap: 15px;
     }
 
-    .date-picker, 
+    .date-picker,
     .city-input {
         width: 100%;
     }
@@ -76,10 +75,21 @@
         height: 150px;
     }
 
+    .humidity,
+    .wind-speed,
+    .sun,
+    .clouds,
+    .uv-index,
+    .pressure {
+        background-size: cover !important;
+        background-position: center !important;
+        background-repeat: no-repeat !important;
+    }
+
     /* Forecast Grid */
     .Forecast {
         grid-template-columns: repeat(2, 1fr);
-        gap: 10px; 
+        gap: 10px;
     }
 
 
@@ -112,6 +122,8 @@
     .dropdown-menu {
         right: 0;
     }
+
+
 }
 
 /* Medium devices (tablets, 768px to 1024px) */
@@ -166,7 +178,7 @@
     }
 
     .dropdown-menu {
-        
+
         padding: 10px 0;
     }
 
