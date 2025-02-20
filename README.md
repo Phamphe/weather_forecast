@@ -39,7 +39,7 @@ The app fetches weather data from the OpenWeather API and displays it dynamicall
 ## 🚀 Setup Instructions
 1. Clone this repository:
 
-   git clone https://github.com/Phamphe/weather_forecast.git
+   git clone [https://github.com/Phamphe/weather_forecast.git](https://github.com/Phamphe/weather_forecast.git)
    ```
 2. Navigate to the project folder:
    ```sh
