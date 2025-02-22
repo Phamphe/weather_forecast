@@ -1,188 +1,193 @@
 /* Small devices (phones, 768px and down) */
 @media screen and (max-width: 768px) {
-    .container {
-        flex-direction: column;
-    }
+  .container {
+    flex-direction: column;
+  }
 
-    /* Sidebar/Weather Input Section */
-    .weather-input {
-        position: relative;
-        width: 100%;
-        padding: 1rem;
-        inset: auto;
-    }
+  /* Sidebar/Weather Input Section */
+  .weather-input {
+    position: relative;
+    width: 100%;
+    padding: 1rem;
+    inset: auto;
+  }
 
-    /* Main Content/Weather Output Section */
-    .weather-output {
-        width: 100%;
-        margin-left: 0;
-        padding: 1rem;
-        position: relative;
-        /
-    }
+  .weather-output {
+    width: 100%;
+    margin-left: 0;
+    padding: 1rem;
+    position: relative;
+  }
+  .Forecast div {
+    font-size: 10px;
+  }
 
-    /* Temperature Display */
-    .temperature {
-        font-size: 3.5rem;
-    }
+  .temperature {
+    font-size: 3.5rem;
+  }
 
-    .temperature span {
-        font-size: 1.5rem;
-        margin-top: 15px;
-    }
+  .humidity,
+  .wind-speed,
+  .sun,
+  .clouds,
+  .uv-index,
+  .pressure {
+    background-size: cover !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+  }
 
-    .weatherIcon {
-        height: 20%;
-        margin: 1rem auto;
-    }
+  .fa-circle-user {
+    font-size: 2rem;
+    color: var(--theme-color-text-10);
+    cursor: pointer;
+    transition: color 0.3s ease;
+  }
 
-    /* Search Inputs */
-    .input-group {
-        margin: 1rem 0;
-    }
+  .fa-circle-user:hover {
+    color: var(--theme-color-light-10);
+  }
 
-    .input-group input {
-        font-size: 14px;
-    }
+  .temperature span {
+    font-size: 1.5rem;
+    margin-top: 15px;
+  }
 
-    /* Anomaly Search Section */
-    .anomaly-search {
-        margin-top: 20px;
-    }
+  .weatherIcon {
+    height: 20%;
+    margin: 1rem auto;
+  }
 
-    .search-container {
-        flex-direction: column;
-        gap: 15px;
-    }
+  /* Search Inputs */
+  .input-group {
+    margin: 1rem 0;
+  }
 
-    .date-picker,
-    .city-input {
-        width: 100%;
-    }
+  .input-group input {
+    font-size: 14px;
+  }
 
-    .search-btn {
-        width: 100%;
-        justify-content: center;
-    }
+  /* Anomaly Search Section */
+  .anomaly-search {
+    margin-top: 20px;
+  }
 
-    /* Highlights Grid */
-    .Highlights {
-        grid-template-columns: 1fr;
-        gap: 15px;
-    }
+  .search-container {
+    flex-direction: column;
+    gap: 15px;
+  }
 
-    .Highlights div {
-        height: 150px;
-    }
+  .date-picker,
+  .city-input {
+    width: 100%;
+  }
 
-    .humidity,
-    .wind-speed,
-    .sun,
-    .clouds,
-    .uv-index,
-    .pressure {
-        background-size: cover !important;
-        background-position: center !important;
-        background-repeat: no-repeat !important;
-    }
+  .search-btn {
+    width: 100%;
+    justify-content: center;
+  }
 
-    /* Forecast Grid */
-    .Forecast {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 10px;
-    }
+  /* Highlights Grid */
+  .Highlights {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
 
+  .Highlights div {
+    height: 150px;
+  }
 
-    /* Modal Adjustments */
-    .modal-content {
-        width: 95%;
-        padding: 15px;
-        margin: 10px;
-    }
+  /* Forecast Grid */
+  .Forecast {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
 
-    .anomaly-grid {
-        grid-template-columns: 1fr;
-    }
+  /* ------------------Modal Adjustments---------------------- */
+  .modal-content {
+    width: 95%;
+    padding: 15px;
+    margin: 10px;
+  }
 
-    .anomaly-details p {
-        flex-direction: column;
-        text-align: center;
-        gap: 5px;
-    }
+  .anomaly-grid {
+    grid-template-columns: 1fr;
+  }
 
-    /* User Profile */
-    .user-profile {
-        position: relative;
-        top: 0;
-        right: 0;
-        margin-bottom: 20px;
-        justify-content: flex-end;
-    }
+  .anomaly-details p {
+    flex-direction: column;
+    text-align: center;
+    gap: 5px;
+  }
 
-    .dropdown-menu {
-        right: 0;
-    }
+  /*------------------------ User Profile-------------------*/
+  .user-profile {
+    position: relative;
+    top: 0;
+    right: 0;
+    margin-bottom: 20px;
+    justify-content: flex-end;
+  }
 
-
+  .dropdown-menu {
+    right: 0;
+  }
 }
 
 /* Medium devices (tablets, 768px to 1024px) */
 @media screen and (min-width: 769px) and (max-width: 1024px) {
-    .weather-input {
-        width: 30%;
-    }
+  .weather-input {
+    width: 30%;
+  }
 
-    .weather-output {
-        width: 70%;
-        margin-left: 30%;
+  .weather-output {
+    width: 70%;
+    margin-left: 30%;
+  }
 
-    }
+  .Highlights {
+    grid-template-columns: repeat(2, 1fr);
+  }
 
-    .Highlights {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .Forecast {
-        grid-template-columns: repeat(3, 1fr);
-    }
+  .Forecast {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 
 /* Landscape Mode Adjustments */
 @media screen and (max-width: 768px) and (orientation: landscape) {
-    .weather-input {
-        padding: 0.5rem;
-    }
+  .weather-input {
+    padding: 0.5rem;
+  }
 
-    .temperature {
-        font-size: 2.5rem;
-    }
+  .temperature {
+    font-size: 2.5rem;
+  }
 
-    .weatherIcon {
-        height: 15%;
-        margin: 0.5rem auto;
-    }
+  .weatherIcon {
+    height: 15%;
+    margin: 0.5rem auto;
+  }
 
-    .weather-output {
-        margin-top: 400px;
-    }
+  .weather-output {
+    margin-top: 400px;
+  }
 
-    .Highlights {
-        grid-template-columns: repeat(2, 1fr);
-    }
+  .Highlights {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
-
 @media (hover: none) {
-    .search-btn:active {
-        background: #006094;
-    }
+  .search-btn:active {
+    background: #006094;
+  }
 
-    .dropdown-menu {
+  .dropdown-menu {
+    padding: 10px 0;
+  }
 
-        padding: 10px 0;
-    }
-
-    .dropdown-menu li a {
-        padding: 12px 15px;
-    }
+  .dropdown-menu li a {
+    padding: 12px 15px;
+  }
 }

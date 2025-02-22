@@ -100,6 +100,7 @@ body {
   outline: none;
   font-size: 18px;
   cursor: pointer;
+  background: var(--theme-color-input-10);
 }
 
 .input-group .fa-search {
@@ -110,10 +111,23 @@ body {
   font-size: 22px;
 }
 
+#converter option {
+  color: #333;
+  background-color: var(--theme-color-background-10);
+}
+
 /* --------------------Sidebar Styling Ends Here----------------------- */
 
 /* --------------------Dashboard Styling Starts Here----------------------- */
 
+.logo-container {
+  text-align: center;
+}
+
+.logo-container img {
+  max-width: 80%;
+  height: 50px;
+}
 .weather-output {
   width: 75%;
   position: fixed;
@@ -139,6 +153,17 @@ body {
 
 .user-profile i {
   margin-right: 0.5rem;
+}
+
+.fa-circle-user {
+  font-size: 2rem;
+  color: var(--theme-color-text-10);
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.fa-circle-user:hover {
+  color: var(--theme-color-light-10);
 }
 
 .user-profile .dropdown {
@@ -215,6 +240,10 @@ p.date-limit-notice {
   align-items: center;
 }
 
+.search-container input {
+  outline: none;
+}
+
 .date-picker,
 .city-input {
   padding: 10px;
@@ -250,7 +279,6 @@ p.date-limit-notice {
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
-  /* Add flexbox for centering */
   align-items: center;
   justify-content: center;
 }
@@ -262,9 +290,7 @@ p.date-limit-notice {
   width: 70%;
   max-width: 800px;
   position: relative;
-  /* Remove the margin that was causing the offset */
   margin: 0;
-  /* Add max-height to prevent overflow on smaller screens */
   max-height: 90vh;
   overflow-y: auto;
 }
@@ -409,7 +435,6 @@ p.date-limit-notice {
   grid-auto-flow: row;
   row-gap: 1rem;
   column-gap: 10px;
-  margin-bottom: 50px;
 }
 
 .Highlights div,
@@ -422,6 +447,13 @@ p.date-limit-notice {
   background: var(--theme-color-light-10);
   border-radius: 20px;
   padding: 1rem;
+}
+
+.Forecast div img {
+  display: block;
+  margin: 0 auto;
+  width: 100px;
+  height: auto;
 }
 
 .Highlights i {
@@ -448,4 +480,96 @@ p.date-limit-notice {
 
 .heading {
   margin: 1rem 0;
+}
+
+/*-------------------------------CSS Tour Guide---------------------------*/
+
+/* Add this to dashboard.css */
+.tour-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+
+.tour-tooltip {
+  position: absolute;
+  background: white;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  max-width: 300px;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.tour-tooltip::before {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-style: solid;
+}
+
+.tour-tooltip.top::before {
+  border-width: 0 10px 10px 10px;
+  border-color: transparent transparent white transparent;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.tour-tooltip.bottom::before {
+  border-width: 10px 10px 0 10px;
+  border-color: white transparent transparent transparent;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.tour-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+.tour-button {
+  padding: 8px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  background: #007cba;
+  color: white;
+  transition: background 0.3s;
+}
+
+.tour-button:hover {
+  background: #006094;
+}
+
+.tour-button.skip {
+  background: #6c757d;
+}
+
+.tour-button.skip:hover {
+  background: #5a6268;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.tour-highlight {
+  position: relative;
+  z-index: 1001;
+  box-shadow: 0 0 0 4px #007cba;
+  border-radius: 4px;
 }

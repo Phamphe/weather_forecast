@@ -5,7 +5,7 @@ const registerForm = document.querySelector(".register-form");
 
 
 // Event to toggle form display
-loginBtn.addEventListener('click', () =>{
+loginBtn.addEventListener('click', () => {
     loginBtn.style.backgroundColor = "#4189BA";
     registerBtn.style.backgroundColor = "rgba(255, 255, 255, 0.2)";
 
@@ -16,9 +16,9 @@ loginBtn.addEventListener('click', () =>{
     registerForm.style.opacity = 0;
 })
 
-registerBtn.addEventListener('click', () =>{
+registerBtn.addEventListener('click', () => {
     loginBtn.style.backgroundColor = "rgba(255, 255, 255, 0.2)";
-    registerBtn.style.backgroundColor =  "#4189BA";
+    registerBtn.style.backgroundColor = "#4189BA";
 
     loginForm.style.left = "150%";
     registerForm.style.left = "50%";
@@ -34,6 +34,28 @@ const logInputIcon = document.getElementById('log-pass-icon');
 const regInputField = document.getElementById('regPassword');
 const regInputIcon = document.getElementById('reg-pass-icon');
 
+
+
+//Easy access login
+// document.getElementById('loginButton').addEventListener('click', function() {
+//     const username = document.querySelector('.login-form input[type="text"]').value;
+//     const password = document.querySelector('.login-form input[type="password"]').value;
+
+//     if (username.trim() !== '' && password.trim() !== '') {
+//         window.location.href = 'dashboard.html';
+//     }
+// });
+
+// // Register form handler
+// document.getElementById('registerButton').addEventListener('click', function() {
+//     const username = document.querySelector('.register-form input[type="text"]').value;
+//     const email = document.querySelector('.register-form input[placeholder="Email"]').value;
+//     const password = document.querySelector('.register-form input[type="password"]').value;
+
+//     if (username.trim() !== '' && email.trim() !== '' && password.trim() !== '') {
+//         window.location.href = 'dashboard.html';
+//     }
+// });
 
 //Event to View Password
 
@@ -62,8 +84,8 @@ function myRegPassword() {
 }
 
 // Event Listener when user starts typing
-function changeIcon(value){
-    if(value.length > 0) {
+function changeIcon(value) {
+    if (value.length > 0) {
         logInputIcon.classList.remove("fa-lock");
         logInputIcon.classList.add("fa-eye-slash");
 
@@ -73,3 +95,13 @@ function changeIcon(value){
 
     }
 }
+
+
+
+
+
+
+
+
+
+
