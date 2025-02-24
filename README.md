@@ -5,6 +5,9 @@
 Weather R’US is a web application that provides real-time weather updates and historical weather data for various locations.
 The app fetches weather data from the OpenWeather API and displays it dynamically on the dashboard. Users can search for a city and retrieve past weather conditions for a selected date.
 
+##  Figma Dashboard Design
+https://www.figma.com/design/An4PffmHM1O18WO6XpFNV3/Weather-R'-US?node-id=0-1&p=f&t=8vevN8rpNpgOC7QJ-0
+
 ## 🌟 Features
 
 ### 🔹 Login & Signup
