@@ -283,6 +283,17 @@ const tourSteps = [
   }
 ];
 
+// function end() {
+//   this.overlay.remove();
+//   if (this.tooltip) {
+//     this.tooltip.remove();
+//   }
+//   document.querySelectorAll('.tour-highlight').forEach(el => {
+//     el.classList.remove('tour-highlight');
+//   });
+//   localStorage.setItem('weatherTourCompleted', 'true');
+// }
+
 class WeatherTour {
   constructor(steps) {
     this.steps = steps;
@@ -393,6 +404,11 @@ class WeatherTour {
       el.classList.remove('tour-highlight');
     });
     localStorage.setItem('weatherTourCompleted', 'true');
+    
+ 
+    setTimeout(() => {
+      window.location.reload();
+    }, 500);
   }
 }
 
