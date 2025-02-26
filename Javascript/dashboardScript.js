@@ -411,3 +411,172 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
+// Adding function to detect user's location
+function detectUserLocation() {
+  
+  document.querySelector('.weather-input').classList.add('weather-loading');
+  
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      // Success callback
+      (position) => {
+        const lat = position.coords.latitude;
+        const lon = position.coords.longitude;
+        
+        // Fetch city name and weather data using coordinates
+        fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=64f9716a1abb4f99787cef9d9702144d`)
+          .then(response => response.json())
+          .then(data => {
+            // Update the search input with the detected city name
+            userLocation.value = data.name;
+            
+            // Loading weather data for the detected location
+            findUserLocationByCoords(lat, lon);
+          })
+          .catch(error => {
+            console.error("Error fetching location data:", error);
+            document.querySelector('.weather-input').classList.remove('weather-loading');
+            alert("Could not determine your location. Please search manually.");
+          });
+      },
+     
+      (error) => {
+        console.error("Geolocation error:", error);
+        document.querySelector('.weather-input').classList.remove('weather-loading');
+        alert("Could not determine your location. Please search manually.");
+      },
+      
+      {
+        enableHighAccuracy: true,
+        timeout: 5000,
+        maximumAge: 0
+      }
+    );
+  } else {
+    alert("Geolocation is not supported by this browser. Please search manually.");
+    document.querySelector('.weather-input').classList.remove('weather-loading');
+  }
+}
+
+
+function findUserLocationByCoords(lat, lon) {
+  Forecast.innerHTML = "";
+  
+  // Fetching current weather using coordinates
+  fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=64f9716a1abb4f99787cef9d9702144d`)
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.cod !== 200) {
+        alert(data.message);
+        document.querySelector('.weather-input').classList.remove('weather-loading');
+        return;
+      }
+      
+      city.innerHTML = data.name + ", " + data.sys.country;
+      weatherIcon.style.background = `url(https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png)`;
+
+      // Store the raw temperature in Celsius for later conversion
+      currentTemp = data.main.temp;
+      temperature.innerHTML = TempConverter(currentTemp);
+
+      // Fetch additional weather data using the 3.0 One Call API
+      fetch(`https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&exclude=minutely&units=metric&appid=64f9716a1abb4f99787cef9d9702144d`)
+        .then((response) => response.json())
+        .then((data) => {
+          // Update additional fields
+          feelsLike.innerHTML = "Feels like " + data.current.feels_like;
+          description.innerHTML =
+            `<i class="fa-brands fa-cloudversify"></i> &nbsp;` +
+            data.current.weather[0].description;
+          const options = {
+            weekday: "long",
+            month: "long",
+            day: "numeric",
+            hour: "numeric",
+            minute: "numeric",
+            hour12: true,
+          };
+
+          date.innerHTML = getLongFormattedDateTime(
+            data.current.dt,
+            data.timezone_offset,
+            options
+          );
+
+          HValue.innerHTML =
+            Math.round(data.current.humidity) + "<span>%</span>";
+          WValue.innerHTML = data.current.wind_speed + "<span>m/s</span>";
+
+          const options1 = {
+            hour: "numeric",
+            minute: "numeric",
+            hour12: true,
+          };
+          SRValue.innerHTML = getLongFormattedDateTime(
+            data.current.sunrise,
+            data.timezone_offset,
+            options1
+          );
+          SSValue.innerHTML = getLongFormattedDateTime(
+            data.current.sunset,
+            data.timezone_offset,
+            options1
+          );
+
+          CValue.innerHTML = data.current.clouds + "<span>%</span>";
+          UVValue.innerHTML = data.current.uvi;
+          PValue.innerHTML = data.current.pressure + "<span>hPa</span>";
+
+          // Processing daily forecast
+          data.daily.forEach((weather) => {
+            let div = document.createElement("div");
+            const options = {
+              weekday: "long",
+              month: "long",
+              day: "numeric",
+            };
+
+            let daily = getLongFormattedDateTime(weather.dt, 0, options).split(
+              " at "
+            );
+            div.innerHTML = daily[0];
+            div.innerHTML += `<img src="https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png"/>`;
+            div.innerHTML += `<p class="forecast-desc">${weather.weather[0].description}</p>`;
+            
+            div.innerHTML += `<span class="forecast-temp" data-raw-min="${weather.temp.min}" data-raw-max="${weather.temp.max}">
+                                <span>${TempConverter(weather.temp.min)}</span>
+                                <span>${TempConverter(weather.temp.max)}</span>
+                              </span>`;
+            Forecast.append(div);
+          });
+          
+          // Removed loading state
+          document.querySelector('.weather-input').classList.remove('weather-loading');
+          document.querySelector('.weather-input').classList.add('weather-loaded');
+        })
+        .catch(error => {
+          console.error("Error fetching detailed weather:", error);
+          document.querySelector('.weather-input').classList.remove('weather-loading');
+        });
+    })
+    .catch(error => {
+      console.error("Error fetching weather:", error);
+      document.querySelector('.weather-input').classList.remove('weather-loading');
+    });
+}
+
+// Calling the geolocation function when the page loads
+document.addEventListener('DOMContentLoaded', () => {
+  tour = new WeatherTour(tourSteps);
+  
+  // Start tour after a delay
+  setTimeout(() => tour.start(), 1000);
+  
+  // Detection of user location on page load
+  detectUserLocation();
+});
+
+
+document.querySelector('.fa-search').addEventListener('click', findUserLocation);
+
+
