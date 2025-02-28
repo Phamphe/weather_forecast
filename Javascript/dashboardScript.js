@@ -174,6 +174,8 @@ window.onclick = function (event) {
   }
 }
 
+
+//Searching weather anomalies for any previous date and 7 day future anomalies
 function searchAnomalies() {
   const date = document.getElementById("anomalyDate").value;
   const location = document.getElementById("anomalyLocation").value;
@@ -183,7 +185,7 @@ function searchAnomalies() {
     return;
   }
 
-  // First get coordinates for the location
+  // Initially get coordinates for the location
   fetch(`${WEATHER_API_ENDPOINT}${location}`)
     .then(response => response.json())
     .then(data => {
@@ -192,31 +194,64 @@ function searchAnomalies() {
       }
 
       const { lat, lon } = data.coord;
-      const timestamp = Math.floor(new Date(date).getTime() / 1000);
-      const cityName = data.name; // Store the city name
-
-
-      return fetch(`https://api.openweathermap.org/data/3.0/onecall/timemachine?lat=${lat}&lon=${lon}&dt=${timestamp}&appid=64f9716a1abb4f99787cef9d9702144d&units=metric`)
-        .then(response => response.json())
-        .then(weatherData => {
-          // Pass both city name and weather data
-          displayAnomalies(weatherData, cityName);
-        });
+      const selectedDate = new Date(date);
+      const timestamp = Math.floor(selectedDate.getTime() / 1000);
+      const cityName = data.name;
+      const currentDate = new Date();
+      
+      // Reset hours to compare just the dates
+      currentDate.setHours(0, 0, 0, 0);
+      const compareDate = new Date(selectedDate);
+      compareDate.setHours(0, 0, 0, 0);
+      
+      // Days difference calculation between selected date and today
+      const daysDifference = Math.round((compareDate - currentDate) / (1000 * 60 * 60 * 24));
+      
+      // If selected date is today or in the past, use time-machine endpoint
+      if (daysDifference <= 0) {
+        return fetch(`https://api.openweathermap.org/data/3.0/onecall/timemachine?lat=${lat}&lon=${lon}&dt=${timestamp}&appid=64f9716a1abb4f99787cef9d9702144d&units=metric`)
+          .then(response => response.json())
+          .then(weatherData => {
+            displayPastAnomalies(weatherData, cityName, date);
+          });
+      } 
+      // If selected date is in the future (within forecast range)
+      else if (daysDifference <= 16) { // Assuming 7-day forecast is available
+        return fetch(`https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&exclude=minutely,hourly,current&appid=64f9716a1abb4f99787cef9d9702144d&units=metric`)
+          .then(response => response.json())
+          .then(weatherData => {
+            displayFutureAnomalies(weatherData, cityName, date, daysDifference);
+          });
+      } 
+      // If selected date is too far in the future
+      else {
+        throw new Error(`Weather forecasts are only available up to 7 days in the future.`);
+      }
     })
     .catch(error => {
       alert("Error: " + error.message);
     });
 }
 
-// Update the modal display function
-function displayAnomalies(data, cityName) {
+
+
+
+// Function to display past weather anomalies
+function displayPastAnomalies(data, cityName, searchDate) {
   const resultsDiv = document.getElementById("anomalyResults");
   resultsDiv.innerHTML = '';
+
+  if (!data.data || data.data.length === 0) {
+    resultsDiv.innerHTML = `<div class="anomaly-error">No weather data available for ${cityName} on ${new Date(searchDate).toLocaleDateString()}</div>`;
+    modal.style.display = "flex";
+    return;
+  }
 
   const weather = data.data[0];
   const html = `
       <div class="anomaly-data">
-          <h3>Weather Summary for ${cityName}</h3>
+          <h3>Historical Weather for ${cityName}</h3>
+          
           <div class="anomaly-grid">
               <div class="anomaly-item">
                   <h4>Temperature</h4>
@@ -249,6 +284,61 @@ function displayAnomalies(data, cityName) {
   resultsDiv.innerHTML = html;
   modal.style.display = "flex";
 }
+
+
+// Function to display future 7 days weather forecast
+function displayFutureAnomalies(data, cityName, searchDate, dayIndex) {
+  const resultsDiv = document.getElementById("anomalyResults");
+  resultsDiv.innerHTML = '';
+
+  if (!data.daily || data.daily.length <= dayIndex) {
+    resultsDiv.innerHTML = `<div class="anomaly-error">No forecast data available for ${cityName} on ${new Date(searchDate).toLocaleDateString()}</div>`;
+    modal.style.display = "flex";
+    return;
+  }
+
+  const forecast = data.daily[dayIndex];
+  const html = `
+      <div class="anomaly-data">
+          <h3>Weather Forecast for ${cityName}</h3>
+          
+          <div class="anomaly-grid">
+              <div class="anomaly-item">
+                  <h4>Temperature</h4>
+                  <p>Day: ${forecast.temp.day}°C</p>
+                  <p>Min: ${forecast.temp.min}°C</p>
+                  <p>Max: ${forecast.temp.max}°C</p>
+              </div>
+              <div class="anomaly-item">
+                  <h4>Humidity</h4>
+                  <p>${forecast.humidity}%</p>
+              </div>
+              <div class="anomaly-item">
+                  <h4>Wind Speed</h4>
+                  <p>${forecast.wind_speed} m/s</p>
+              </div>
+              <div class="anomaly-item">
+                  <h4>Weather</h4>
+                  <p>${forecast.weather[0].description}</p>
+              </div>
+          </div>
+          <div class="anomaly-details">
+              <p class="date-info">Date: ${new Date(forecast.dt * 1000).toLocaleDateString()}</p>
+              <p>Pressure: ${forecast.pressure} hPa</p>
+              <p>Clouds: ${forecast.clouds}%</p>
+              <p>Dew Point: ${forecast.dew_point}°C</p>
+              <p>UV Index: ${forecast.uvi}</p>
+              <p>Precipitation Probability: ${(forecast.pop * 100).toFixed(0)}%</p>
+          </div>
+      </div>
+  `;
+
+  resultsDiv.innerHTML = html;
+  modal.style.display = "flex";
+}
+
+
+
 
 
 
