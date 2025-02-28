@@ -44,21 +44,22 @@ https://www.figma.com/design/An4PffmHM1O18WO6XpFNV3/Weather-R'-US?node-id=0-1&p=
 
 .
 ### 🔹 Historical Weather Search (Any Date)
-Users can search for past weather conditions by selecting a date and entering a city.
-Uses OpenWeather’s Historical API to fetch:
-Historical Weather Search✅ The selected date
-✅ The city and country
-✅ The temperature on that day
-✅ A weather description
+- Users can search for past weather conditions by selecting a date and entering a city.
+- Uses OpenWeather’s Historical API to fetch:
+
+- ✅ The selected date
+- ✅ The city and country
+- ✅ The temperature on that day
+- ✅ A weather description
 - Data is displayed inside a modal popup.
 
 ### 🔹 Future Weather Forecast
-Users can check the future weather for any given date.
-Powered by OpenWeather’s One Call API.
+- Users can check the future weather for any given date.
+- Powered by OpenWeather’s One Call API.
 Includes:
-✅ Forecasted temperature
-✅ Predicted weather conditions
-✅ Expected humidity and wind speed
+- ✅ Forecasted temperature
+- ✅ Predicted weather conditions
+- ✅ Expected humidity and wind speed
 
 ## 🛠️ Technologies Used
 
