@@ -12,8 +12,10 @@
     --theme-color-lightgrey-10: #909090;
     --webkit-scrollbar-thumb: #83838398;
     --webkit-forecast-desc: #7f7f7f;
-
-
+    --webkit-error-text: #d64141;
+    --webkit-text-color: #333;
+    --webkit-dropdown-menu: #eee;
+    --webkit-color-menu: #ccc;
   }
 
 
@@ -123,7 +125,7 @@ body{
 }
 
 #converter option {
-    color: #333;
+    color: var(--webkit-text-color);
     background-color: var(--theme-color-background-10); 
 }
 
@@ -195,7 +197,7 @@ body{
     top: 100%;
     right: 0;
     background: rgba(0, 0, 0, 0.8); 
-    border: 1px solid #ccc;
+    border: 1px solid var(--webkit-color-menu);
     border-radius: 4px;
     list-style: none;
     padding: 0;
@@ -206,7 +208,7 @@ body{
 }
 
 .dropdown-menu li {
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid var(--webkit-dropdown-menu);
 }
 
 .dropdown-menu li:last-child {
@@ -239,7 +241,7 @@ p.date-limit-notice{
 }
 
 .date-limit-notice span{
-    color: red;
+    color: var(--webkit-error-text);
 }
 
 .anomaly-search {
@@ -369,7 +371,20 @@ p.date-limit-notice{
     margin-bottom: 15px;
 }
 
-
+.data-type {
+    font-style: italic;
+    color: var(--webkit-forecast-desc);
+    margin-top: -10px;
+    margin-bottom: 15px;
+    text-align: center;
+  }
+  
+  .anomaly-error {
+    color: var(--webkit-error-text);
+    padding: 20px;
+    text-align: center;
+    font-weight: bold;
+  }
 /* --------------------Past and Future Weather Styling Ends Here------------------- */
 
 
@@ -605,3 +620,121 @@ p.date-limit-notice{
     box-shadow: 0 0 0 4px #007cba;
     border-radius: 4px;
   }
+
+
+
+
+
+
+
+/* ------------------------------------------------------------------------------------- */
+
+
+.weather-loading .weatherIcon,
+.weather-loading .temperature,
+.weather-loading .feelsLike,
+.weather-loading .description,
+.weather-loading .date,
+.weather-loading .city {
+  position: relative;
+  overflow: hidden;
+  min-height: 20px;
+  color: transparent;
+}
+
+.weather-loading .temperature {
+  min-height: 80px;
+}
+
+.weather-loading .weatherIcon {
+  min-height: 100px;
+}
+
+/* Loading shimmer effect */
+.weather-loading .weatherIcon::after,
+.weather-loading .temperature::after,
+.weather-loading .feelsLike::after,
+.weather-loading .description::after,
+.weather-loading .date::after,
+.weather-loading .city::after,
+.weather-loading .Highlights div::after,
+.weather-loading #HValue::after,
+.weather-loading #WValue::after,
+.weather-loading #SRValue::after,
+.weather-loading #SSValue::after,
+.weather-loading #CValue::after,
+.weather-loading #UVValue::after,
+.weather-loading #PValue::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, #e0e0e0 0%, #f0f0f0 50%, #e0e0e0 100%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 4px;
+}
+
+/* Loading effects for Highlights section */
+.weather-loading .Highlights div {
+  position: relative;
+  overflow: hidden;
+}
+
+.weather-loading .Highlights div i,
+.weather-loading .Highlights div h1,
+.weather-loading .Highlights div span {
+  opacity: 0;
+}
+
+/* Loading effects for Forecast section */
+.weather-loading .Forecast div {
+  position: relative;
+  overflow: hidden;
+  background: #e0e0e0;
+  color: transparent;
+}
+
+.weather-loading .Forecast div::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, #e0e0e0 0%, #f0f0f0 50%, #e0e0e0 100%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* Fade-in animation for loaded content */
+.weather-loaded .weatherIcon,
+.weather-loaded .temperature,
+.weather-loaded .feelsLike,
+.weather-loaded .description,
+.weather-loaded .date,
+.weather-loaded .city,
+.weather-loaded .Highlights div,
+.weather-loaded .Forecast div {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
